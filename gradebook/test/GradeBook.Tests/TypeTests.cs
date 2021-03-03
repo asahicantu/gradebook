@@ -6,13 +6,29 @@ namespace GradeBook.Tests
 {
     public class TypeTests
     {
+        public delegate string WriteLogDelegate(string logMessage);
+        [Fact]
+        public void WriteLogDelegateToMethod()
+        {
+            var log = new WriteLogDelegate(WriteTextMessage);
+            log += WriteTextMessage;
+            var msg = log("Hello");
+            Assert.Equal("Hello",msg);
+
+        }
+
+        private string  WriteTextMessage(string message)
+        {
+            return message;
+        }
+
 
         [Fact]
         public void StringsBehaveAsValueTypes()
         {
             string name = "Asahi";
             name = MakeUppercase(name);
-            Assert.Equal("ASAHI",name);
+            Assert.Equal("ASAHI", name);
         }
 
         private string MakeUppercase(string name)
@@ -56,14 +72,14 @@ namespace GradeBook.Tests
             Assert.Equal("Book1", book1.Name);
         }
 
-        private void GetBookSetNameByRef(ref Book book, string name)
+        private void GetBookSetNameByRef(ref InMemoryBook book, string name)
         {
-            book = new Book(name);
+            book = GetBook(name);
         }
 
-        private void GetBookSetNameByVal(Book book, string name)
+        private void GetBookSetNameByVal(InMemoryBook book, string name)
         {
-            book = new Book(name);
+            book = GetBook(name);
         }
 
 
@@ -102,12 +118,12 @@ namespace GradeBook.Tests
             Assert.True(Object.ReferenceEquals(book1, book2));
         }
 
-        private Book GetBook(string name)
+        private InMemoryBook GetBook(string name)
         {
-            return new Book(name);
+            return new InMemoryBook(name);
         }
 
-        private void SetName(Book book, string name)
+        private void SetName(InMemoryBook book, string name)
         {
             book.Name = name;
         }
