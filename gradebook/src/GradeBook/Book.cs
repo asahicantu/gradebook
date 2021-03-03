@@ -7,15 +7,22 @@ namespace GradeBook
     public class Book
     {
         private List<double> _grades = new List<double>();
-        public string Name{get; private set;}
+        public string Name { get; set; }
         public Book(string name)
         {
             Name = name;
         }
 
-        public void AddGrade(double num)
+        public void AddGrade(double grade)
         {
-            _grades.Add(num);
+            if (grade <= 100 && grade >= 0)
+            {
+                _grades.Add(grade);
+            }
+            else{
+                Console.WriteLine("Invalid Value");
+            }
+
         }
 
         public void ShowStatistics()
@@ -28,11 +35,17 @@ namespace GradeBook
 
         public Statistics GetStatistics()
         {
-            var stats = new Statistics{
-                Average = _grades.Average(),
-                LowScore = _grades.Min(),
-                HighScore = _grades.Max()
-            };
+            Statistics stats = new Statistics();
+            if (_grades.Count > 0)
+            {
+                stats = new Statistics
+                {
+                    Average = _grades.Average(),
+                    LowScore = _grades.Min(),
+                    HighScore = _grades.Max()
+
+                };
+            }
             return stats;
         }
     }

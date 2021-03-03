@@ -7,14 +7,15 @@ namespace GradeBook
     {
         static void Main(string[] args)
         {
-             var book = new Book("Test");
-            foreach(var arg in args)
+            var book = new Book("Test");
+            foreach (var arg in args)
             {
-                if(Double.TryParse(arg,out double grade))
+                if (Double.TryParse(arg, out double grade))
                 {
                     book.AddGrade(grade);
                 }
             }
+            
             book.ShowStatistics();
         }
     }
